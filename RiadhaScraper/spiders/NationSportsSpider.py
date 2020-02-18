@@ -1,5 +1,6 @@
 import scrapy
 
+
 class NationSportsSpider(scrapy.Spider):
     name = "NationSports"
 
@@ -12,6 +13,7 @@ class NationSportsSpider(scrapy.Spider):
         for article in response.css("div.story-view"):
             yield {
                 'title': article.css("header > h2::text").extract_first(),
+                'image': article.css("header > div > img.photo_article::attr(src)").extract_first(),
                 'publication_date': article.css("header > h6::text").extract_first(),
                 'author': article.css("section.body-copy > section.author > strong::text").extract_first(),
                 'body': article.css("section.body-copy > div > p::text").getall()
